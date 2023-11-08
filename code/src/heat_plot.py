@@ -5,6 +5,7 @@ __author__ = 'Daniel Elisabethsønn Antonsen, UiT Institute of statistics and ma
 # Importing libraries and modules
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sn; sn.set_style('darkgrid')
 import os
 from matplotlib.animation import FuncAnimation
 
