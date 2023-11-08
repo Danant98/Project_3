@@ -5,6 +5,7 @@ __author__ = 'Daniel Elisabethsønn Antonsen, UiT Institute of statistics and ma
 # Importing libraries and modules
 from num_scheme import heat_eq as hq
 import numpy as np
+from heat_plot import Plot as p
 
 # Initializing numerical scheme
 hq1 = hq()
@@ -20,8 +21,9 @@ rho = np.zeros((x.shape[0], t.shape[0]))
 # Running the numerical scheme
 sol_1 = hq1.finite_diff(f, g, phi, rho)
 
-
-
+# Plotting 
+plt = p(x, t, sol_1)
 
 if __name__ == '__main__':
-    pass
+    # plt.plot(0, hq1.get_s())
+    plt.animate(hq1.get_s())

@@ -4,20 +4,17 @@ __author__ = 'Daniel Elisabethsønn Antonsen, UiT Institute of statistics and ma
 
 # Importing libraries and modules
 import numpy as np
-import os
-import matplotlib.pyplot as plt
-
 
 class heat_eq:
 
-    def __init__(self, k:float = 0.05, h:float = 0.1, T:int = 5, l:int = 1):
+    def __init__(self, dt:float = 0.001, dx:float = 0.1, T:int = 5, l:int = 1):
         # Initializing time and position arrays
-        self.x = np.arange(0, l + h, h)
-        self.t = np.arange(0, T + k, k)
-        self.s = k / h**2
-        self.k = k
+        self.x = np.arange(0, l + dx, dx)
+        self.t = np.arange(0, T + dt, dt)
+        self.s = dt / (dx**2)
+        self.dt = dt
         # Initializing the solution array u(x, t)
-        self.u = np.zeros((self.x.shape[0], self.x.shape[0])) 
+        self.u = np.zeros((self.x.shape[0], self.t.shape[0]))
     
     def get_x_t(self):
         """
@@ -27,7 +24,7 @@ class heat_eq:
     
     def get_s(self):
         """
-        Get the s value
+        Get the value of s
         """
         return self.s
 
@@ -35,17 +32,18 @@ class heat_eq:
         """
         Solving the heat equation using finite difference method with given boundary and initial conditions
         """
-        # Setting boundary conditions
-        self.u[0, :] = f
-        self.u[-1, :] = g
         # Setting initial condition
         self.u[:, 0] = phi
 
+        # Setting boundary conditions
+        self.u[0, :] = f
+        self.u[-1, :] = g
+
         # Solving the heat equation using finite difference method
-        for n in range(self.u.shape[1]):
+        for n in range(self.u.shape[1] - 1):
             for i in range(1, self.u.shape[0] - 1):
                 self.u[i, n + 1] = self.s * (self.u[i + 1, n] + self.u[i - 1, n]) +\
-                                   (1 - 2 * self.s) * self.u[i, n] + self.k * rho[i, n]
+                                   (1 - 2 * self.s) * self.u[i, n] + self.dt * rho[i, n]
         return self.u
 
 

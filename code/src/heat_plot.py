@@ -25,11 +25,12 @@ class Plot:
         
         # Plotting for a given time
         plt.plot(self.x, self.y[:, time])
+        plt.xlim(0, self.x.max())
         plt.xlabel('x')
         plt.ylabel('u(x, t)')
-        plt.title(f'Solution to Heat equation with s = {s}')
+        plt.title(f'Solution to Heat equation with s = {s:.2f}')
         if save:
-            plt.savefig(os.path.join('../figure', f'solution_time_{time}_s_{s}_.png'))
+            plt.savefig(os.path.join('../figure', f'solution_time_{time}_s_{s:.2f}_.png'))
         plt.show()
     
     def animate(self, s:float, save:bool = False):
@@ -38,11 +39,11 @@ class Plot:
         """
         # Creating figure
         fig = plt.figure()
-        ax = plt.axes(xlim=(0, self.x.max()), ylim=(0, self.y.max() + 1))
+        ax = plt.axes(xlim=(0, self.x.max()), ylim=(-0.5, self.y.max()))
         line, = ax.plot([], [], lw=2)
         ax.set_xlabel('x')
         ax.set_ylabel('u(x, t)')
-        ax.set_title(f'Solution to the heat equation with s = {s}')
+        ax.set_title(f'Solution to the heat equation with s = {s:.2f}')
 
         # Initialization function
         def init():
