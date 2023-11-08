@@ -5,7 +5,7 @@ __author__ = 'Daniel Elisabethsønn Antonsen, UiT Institute of statistics and ma
 # Importing libraries and modules
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sn; sn.set_style('darkgrid')
+import seaborn as sn; sn.set_style('whitegrid')
 import os
 from matplotlib.animation import FuncAnimation
 
@@ -25,7 +25,7 @@ class Plot:
             raise ValueError('Time is not given')
         
         # Plotting for a given time
-        plt.plot(self.x, self.y[:, time])
+        plt.plot(self.x, self.y[:, time], 'r')
         plt.xlim(0, self.x.max())
         plt.xlabel('x')
         plt.ylabel('u(x, t)')
@@ -41,7 +41,7 @@ class Plot:
         # Creating figure
         fig = plt.figure()
         ax = plt.axes(xlim=(0, self.x.max()), ylim=(-0.5, self.y.max()))
-        line, = ax.plot([], [], lw=2)
+        line, = ax.plot([], [], 'r', lw=2)
         ax.set_xlabel('x')
         ax.set_ylabel('u(x, t)')
         ax.set_title(f'Solution to the heat equation with s = {s:.2f}')
