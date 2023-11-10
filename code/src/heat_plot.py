@@ -21,7 +21,7 @@ class Plot:
         Plotting the solution to the heat equation using finite difference method for a given time.
         """
         # Checking if time is given
-        if time == None:
+        if time is None:
             raise ValueError('Time is not given')
         
         # Plotting for a given time
