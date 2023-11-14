@@ -6,6 +6,8 @@ __author__ = 'Daniel Elisabethsønn Antonsen, UiT Institute of statistics and ma
 import numpy as np
 from num_scheme import heat_eq as hq
 from heat_plot import Plot as pt
+from analytic import Analytic
+
 
 # Initializing numerical scheme
 hq1 = hq()
