@@ -22,9 +22,10 @@ class Plot:
         """
         # Checking if time is given
         if time is None:
-            raise ValueError('Time is not given')
+            raise ValueError('Time must be specified')
         
         # Plotting for a given time
+        plt.figure()
         plt.plot(self.x, self.y[:, time], 'r')
         plt.xlim(0, self.x.max())
         plt.xlabel('x')
@@ -34,13 +35,39 @@ class Plot:
             plt.savefig(os.path.join('../figure', f'solution_time_{time}_s_{s:.2f}_.png'))
         plt.show()
     
+    def plot_analytic_numeric(self, ue:np.ndarray, s:float, time:int, save:bool = False):
+        """
+        Plotting analytcal and numerical solutions
+        """
+        if time is None:
+            raise ValueError('Time must be specified')
+        elif time == 0:
+            raise Exception('Initial value is always plotted, please specify time value > 0')
+
+        # Plotting for a given time
+        plt.figure()
+        plt.plot(self.x, ue[:, 0], 'black', label = 'Initial condition')
+        plt.plot(self.x, ue[:, time], 'b--', label = 'Analytic')
+        plt.plot(self.x, self.y[:, time], 'r--', label = 'Numeric')
+        plt.xlim(0, self.x.max())
+        plt.xlabel('x')
+        plt.ylabel('u(x, t)')
+        plt.title(f'Heat equation s = {s} for time = {time}' + r'$\Delta t$')
+
+        
+
+        
+
+
+
+    
     def animate(self, s:float, save:bool = False):
         """
         Creating animation of the solution to the heat equation using finite difference method  
         """
         # Creating figure
         fig = plt.figure()
-        ax = plt.axes(xlim=(0, self.x.max()), ylim=(-0.5, self.y.max()))
+        ax = plt.axes(xlim=(0, self.x.max()), ylim=(-0.5, self.y.max() + 0.2))
         line, = ax.plot([], [], 'r', lw=2)
         ax.set_xlabel('x')
         ax.set_ylabel('u(x, t)')
