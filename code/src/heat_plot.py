@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import seaborn as sn; sn.set_style('darkgrid')
 import os
 from matplotlib.animation import FuncAnimation
+from sklearn.metrics import mean_squared_error
 
 class Plot:
 
@@ -35,6 +36,26 @@ class Plot:
             plt.savefig(os.path.join('../figure', f'solution_time_{time}_s_{s:.2f}_.png'))
         plt.show()
     
+    def rmse_plot(self, u:np.ndarray, uhat:np.ndarray, label:str = None, save:bool = False):
+        """
+        Plotting the rmse for all time steps
+        """
+        # Computing the rmse error
+        rmse = np.zeros((u.shape[1]))
+        for time in range(u.shape[1]):
+            rmse[time] = mean_squared_error(u[:, time], uhat[:, time])
+        
+        # Plotting rmse
+        plt.figure()
+        plt.plot(range(rmse.shape[0]), rmse, 'r')
+        plt.xlabel('Time')
+        plt.ylabel('Error')
+        plt.title('RMSE for Fourer solution and numerical solution')
+        if save:
+            plt.savefig(os.path.join('../figure', f'rmse_error_{label}.png'))
+        plt.show()
+
+
     def plot_analytic_numeric(self, ue:np.ndarray, s:float, time:int, save:bool = False):
         """
         Plotting analytcal and numerical solutions
@@ -53,12 +74,9 @@ class Plot:
         plt.xlabel('x')
         plt.ylabel('u(x, t)')
         plt.title(f'Heat equation s = {s} for time = {time}' + r'$\Delta t$')
-
-        
-
-        
-
-
+        if save:
+            plt.savefig(os.path.join('../figure', 'analytic_numeric.png'))
+        plt.show()
 
     
     def animate(self, s:float, save:bool = False):

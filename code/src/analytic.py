@@ -17,9 +17,6 @@ class Analytic:
         """
         Analyticla solution to the heat equation
         """
-        # Checking if the boundary conditions is defined for each time step
-        assert g.shape and f.shape == self.t.shape, 'f and g must have the same shape as t'
-        
         # Solving the heat equation
         ue = np.zeros((self.x.shape[0], self.t.shape[0]))
         for n in range(ue.shape[1]):
