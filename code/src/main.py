@@ -76,7 +76,6 @@ def fourier_2(x:np.ndarray, t:np.ndarray, n:int = 3):
             u[j, time] = score
     return u
 
-
 # Initializing numerical scheme
 hq1 = hq()
 
