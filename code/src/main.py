@@ -11,14 +11,29 @@ from fourier import Fourier as f
 
 
 
-def source_IC(x:np.ndarray, t:np.ndarray, h:np.ndarray):
+def source(x:np.ndarray, h:np.ndarray, h_t:np.ndarray, h_x:np.ndarray, h_xx:np.ndarray,
+           g:np.ndarray, f:np.ndarray, g_t:np.ndarray, f_t:np.ndarray, l:float = 1):
     """
     Computing the source term and initial condition 
     for 1b)
     """
-    # Initializing the source and initial condition arrays
-    rho = np.zeros((x.shape[0], t.shape[0]))
-    phi = np.zeros((x.shape[0], t.shape[0]))
+    # Initializing the source array
+    rho = np.zeros_like(h)
+    for n in range(h.shape[1]):
+        for i in range(x.shape[0]):
+            # Computing v(x, t)
+            v = x[i] * (g[n] / h[-1, n]) + (l - x[i]) * (f[n] / h[0, n])
+            # Computing v_t(x, t)
+            v_t_term_1 = x[i] * (((g_t[n] * h[-1, n]) - (h_t[-1, n] * g[n])) / h[-1, n]**2)
+            v_t_term_2 = (l - x[i]) * (((f_t[n] * h[0, n]) - (h_t[0, n] * f[n])) / h[0, n]**2)
+            v_t = v_t_term_1 + v_t_term_2
+            A = (g[n] / h[-1, n]) - (f[n] / h[0, n])
+            # Computing pho(x, t)
+            term_1 = (1 / l) * (h_t[i, n] * v[i, n] + h[i, n] * v_t[i, n])
+            term_2 = (1 / l) * (h_xx[i, n] * v[i, n] + 2 * h_x[i, n] * A[n])
+            rho[i, n] = term_1 + term_2
+    return rho
+
 
 
 # Initializing numerical scheme
