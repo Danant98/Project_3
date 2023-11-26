@@ -10,7 +10,7 @@ from analytic import Analytic
 from fourier import Fourier as f
 
 
-
+# Computing rho(x, t)
 def source(x:np.ndarray, h:np.ndarray, h_t:np.ndarray, h_x:np.ndarray, h_xx:np.ndarray,
            g:np.ndarray, f:np.ndarray, g_t:np.ndarray, f_t:np.ndarray, l:float = 1):
     """
