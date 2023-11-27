@@ -29,11 +29,10 @@ def source(x:np.ndarray, h:np.ndarray, h_t:np.ndarray, h_x:np.ndarray, h_xx:np.n
             v_t = v_t_term_1 + v_t_term_2
             A = (g[n] / h[-1, n]) - (f[n] / h[0, n])
             # Computing pho(x, t)
-            term_1 = (1 / l) * (h_t[i, n] * v[i, n] + h[i, n] * v_t[i, n])
-            term_2 = (1 / l) * (h_xx[i, n] * v[i, n] + 2 * h_x[i, n] * A[n])
+            term_1 = (1 / l) * (h_t[i, n] * v + h[i, n] * v_t)
+            term_2 = (1 / l) * (h_xx[i, n] * v + 2 * h_x[i, n] * A)
             rho[i, n] = term_1 + term_2
     return rho
-
 
 
 # Initializing numerical scheme
@@ -59,6 +58,9 @@ rho_2 = np.exp(-t) * np.ones((x.shape[0], t.shape[0]))
 sol_1 = hq1.finite_diff(f_1, g_1, phi_1, rho_1)
 sol_2 = hq1.finite_diff(f_2, g_2, phi_1, rho_2)
 
+# Running the analytical solution 
+analytic_1 = Analytic(x, t, 1).solve(h, f_1, g_1)
+
 # Computing the fourier solution
 f_1 = f.fourier_1(x, t)
 f_2 = f.fourier_2(x, t)
@@ -66,6 +68,9 @@ f_2 = f.fourier_2(x, t)
 # Running plotting class for both the numerical solutions
 plt = pt(x, t, sol_1)
 plt2 = pt(x, t, sol_2)
+
+# Running plotting class for analytical solution
+
 
 if __name__ == '__main__':
     pass
