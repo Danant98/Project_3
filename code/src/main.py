@@ -42,7 +42,7 @@ hq1 = hq()
 x, t = hq1.get_x_t()
 
 # Computing h(x, t)
-h = np.ones((x.shape, t.shape))
+h = np.exp(-t) * np.ones((x.shape[0], t.shape[0]))
 
 # Boundary- and initial conditions for first example
 f_1 = np.sin(t)
@@ -59,7 +59,7 @@ sol_1 = hq1.finite_diff(f_1, g_1, phi_1, rho_1)
 sol_2 = hq1.finite_diff(f_2, g_2, phi_1, rho_2)
 
 # Running the analytical solution 
-analytic_1 = Analytic(x, t, 1).solve(h, f_1, g_1)
+analytic_1 = Analytic(x, t, 1).solve(h, g_1, f_1)
 
 # Computing the fourier solution
 f_1 = f.fourier_1(x, t)
@@ -70,6 +70,7 @@ plt = pt(x, t, sol_1)
 plt2 = pt(x, t, sol_2)
 
 # Running plotting class for analytical solution
+plt_analytic_1 = pt(x, t, analytic_1)
 
 
 if __name__ == '__main__':
@@ -78,5 +79,6 @@ if __name__ == '__main__':
     # plt.plot(0, hq1.get_s())
     # plt.animate(hq1.get_s())
     # plt.animate(hq1.get_s())
+    plt_analytic_1.animate(0.1)
     # plt.rmse_plot(f_1, sol_1, label = 'f1')
     # plt.rmse_plot(f_2, sol_2, label = 'f2')

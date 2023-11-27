@@ -8,7 +8,7 @@ import numpy as np
 # Creating class for containing the Fourier solutions
 class Fourier:
 
-    def fourier_1(self, x:np.ndarray, t:np.ndarray, n:int = 5):
+    def fourier_1(x:np.ndarray, t:np.ndarray, n:int = 5):
         """
         Solution with Fourier series for the first example
         """

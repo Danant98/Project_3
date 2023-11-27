@@ -102,7 +102,7 @@ class Plot:
             return line,
 
         # Creating animation
-        anim = FuncAnimation(fig, animate, init_func=init, frames=self.t.shape[0], interval=20, blit=True)
+        anim = FuncAnimation(fig, animate, init_func=init, frames=self.t.shape[0], interval=5, blit=True)
         if save:
             anim.save(os.path.join('../figure', 'heat_eq.mp4'), fps=30, extra_args=['-vcodec', 'libx264'])
         plt.show()
