@@ -67,18 +67,14 @@ f_2 = f.fourier_2(x, t)
 
 # Running plotting class for both the numerical solutions
 plt = pt(x, t, sol_1)
-plt2 = pt(x, t, sol_2)
-
-# Running plotting class for analytical solution
-plt_analytic_1 = pt(x, t, analytic_1)
 
 
 if __name__ == '__main__':
     pass
     # Plotting and animating solution of the heat equation
     # plt.plot(0, hq1.get_s())
+    plt.animate(sol_2, hq1.get_s())
     # plt.animate(hq1.get_s())
-    # plt.animate(hq1.get_s())
-    plt_analytic_1.animate(0.1)
+    # plt.animate(f_2)
     # plt.rmse_plot(f_1, sol_1, label = 'f1')
     # plt.rmse_plot(f_2, sol_2, label = 'f2')
