@@ -40,10 +40,10 @@ class heat_eq:
         self.u[-1, :] = g
 
         # Solving the heat equation using finite difference method
-        for n in range(self.u.shape[1] - 1):
+        for n in range(1, self.u.shape[1] - 1):
             for i in range(1, self.u.shape[0] - 1):
-                self.u[i, n + 1] = self.s * (self.u[i + 1, n] + self.u[i - 1, n]) +\
-                                   (1 - 2 * self.s) * self.u[i, n] + self.dt * rho[i, n]
+                self.u[i, n] = self.s * (self.u[i + 1, n - 1] + self.u[i - 1, n - 1]) +\
+                                   (1 - 2 * self.s) * self.u[i, n - 1] + self.dt * rho[i, n - 1]
         return self.u
 
 

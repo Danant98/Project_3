@@ -8,6 +8,7 @@ from num_scheme import heat_eq as hq
 from heat_plot import Plot as pt
 from analytic import Analytic
 from fourier import Fourier as f
+from sklearn.metrics import mean_squared_error
 
 
 # Computing rho(x, t)
@@ -18,9 +19,9 @@ def source(x:np.ndarray, h:np.ndarray, h_t:np.ndarray, h_x:np.ndarray, h_xx:np.n
     for 1b)
     """
     # Initializing the source array
-    rho = np.zeros_like(h)
-    for n in range(h.shape[1]):
-        for i in range(x.shape[0]):
+    rho = np.zeros(h.shape)
+    for n in range(rho.shape[1]):
+        for i in range(rho.shape[0]):
             # Computing v(x, t)
             v = x[i] * (g[n] / h[-1, n]) + (l - x[i]) * (f[n] / h[0, n])
             # Computing v_t(x, t)
@@ -38,43 +39,75 @@ def source(x:np.ndarray, h:np.ndarray, h_t:np.ndarray, h_x:np.ndarray, h_xx:np.n
 # Initializing numerical scheme
 hq1 = hq()
 
+
 # Gettiing the position and time arrays
 x, t = hq1.get_x_t()
 
-# Computing h(x, t)
-h = np.exp(-t) * np.ones((x.shape[0], t.shape[0]))
+
+# Computing h(x, t) = 1
+h = np.ones((x.shape[0], t.shape[0]))
+h_t = np.zeros((x.shape[0], t.shape[0]))
+h_x = np.zeros((x.shape[0], t.shape[0]))
+h_xx = np.zeros((x.shape[0], t.shape[0]))
+
+# Computing h(x, t) = exp(t)
+h2 = np.exp(-t) * np.ones((x.shape[0], t.shape[0]))
+h2_t = -np.exp(-t) * np.zeros((x.shape[0], t.shape[0]))
+h2_x = np.zeros((x.shape[0], t.shape[0]))
+h2_xx = np.zeros((x.shape[0], t.shape[0]))
 
 # Boundary- and initial conditions for first example
 f_1 = np.sin(t)
-g_1 = np.zeros_like(t) # BC  
-phi_1 = x * (1 - x)
-rho_1 = np.zeros((x.shape[0], t.shape[0]))
+g_1 = np.zeros_like(t) # BC
+# Derivative of f(t)
+f_1_t = np.cos(t)
 
-# Boundary conditions for second example
-f_2 = g_2 = np.zeros_like(t)
-rho_2 = np.exp(-t) * np.ones((x.shape[0], t.shape[0]))
-
-# Running the numerical scheme
-sol_1 = hq1.finite_diff(f_1, g_1, phi_1, rho_1)
-sol_2 = hq1.finite_diff(f_2, g_2, phi_1, rho_2)
+# Exponenetial decaying boundaries for h(x, t)
+# f_2 = g_2 = np.exp(-t)
+# f_2_t = g_2_t = -np.exp(-t)
 
 # Running the analytical solution 
-analytic_1 = Analytic(x, t, 1).solve(h, g_1, f_1)
+analytic_1 = Analytic(x, t).solve(h, g_1, f_1)
+# analytic_2 = Analytic(x, t).solve(h2, g_2, f_2)
 
+phi_1 = analytic_1[:, 0]
+rho_1 = source(x, h, h_t, h_x, h_xx, g_1, f_1, g_1, f_1_t)
+
+# rho_2 = source(x, h2, h2_t, h2_x, h2_xx, g_2, f_2, g_2_t, f_2_t)
+# phi_2 = analytic_2[:, 0]
+
+# Running the numerical scheme for h(x, t) = 1
+sol_1 = hq1.finite_diff(f_1, g_1, phi_1, rho_1)
+
+# Running numerical scheme for h(x, t) = exp(-t)
+# sol_2 = hq1.finite_diff(f_2, g_2, phi_2, rho_2)
+
+# Computing rmse for h(x, t) = 1
+# rmse_1 = np.zeros_like(t)
+# rmse_2 = np.zeros_like(t)
+# for n in range(t.shape[0]):
+#     rmse_1[n] = mean_squared_error(sol_1[:, n], analytic_1[:, n])
+#     rmse_2[n] = mean_squared_error(sol_2[:, n], analytic_2[:, n])
+
+
+# ------------------------------------------------------------------------------------------------------
 # Computing the fourier solution
-f_1 = f.fourier_1(x, t)
-f_2 = f.fourier_2(x, t)
+# four_1 = f.fourier_1(x, t)
+# four_2 = f.fourier_2(x, t)
 
 # Running plotting class for both the numerical solutions
-plt = pt(x, t, sol_1)
+plt = pt(x, t)
 
 
 if __name__ == '__main__':
     pass
     # Plotting and animating solution of the heat equation
-    # plt.plot(0, hq1.get_s())
-    plt.animate(sol_2, hq1.get_s())
+    plt.plot_analytic_numeric(sol_1, analytic_1, hq1.get_s(), 10, save = True)
+    # plt.plot(300, hq1.get_s())
+    # plt.animate(sol_2, hq1.get_s())
     # plt.animate(hq1.get_s())
-    # plt.animate(f_2)
-    # plt.rmse_plot(f_1, sol_1, label = 'f1')
-    # plt.rmse_plot(f_2, sol_2, label = 'f2')
+    # plt.animate(four_1, s = hq1.get_s())
+    # plt.animate(analytic_1)
+    # plt.animate(sol_2)
+    # plt.rmse_plot(rmse_1, s = hq1.get_s(), name='4', save=True)
+    # plt.rmse_plot(four_2, sol_2, label = 'Fourier series nr. 2')

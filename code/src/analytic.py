@@ -8,7 +8,7 @@ import numpy as np
 # Creating object for analytical solution
 class Analytic:
 
-    def __init__(self, x:np.ndarray, t:np.ndarray, l:float):
+    def __init__(self, x:np.ndarray, t:np.ndarray, l:float = 1):
         self.x = x
         self.t = t
         self.l = l

@@ -12,12 +12,11 @@ from sklearn.metrics import mean_squared_error
 
 class Plot:
 
-    def __init__(self, x:np.ndarray, t:np.ndarray, y:np.ndarray):
+    def __init__(self, x:np.ndarray, t:np.ndarray):
         self.x = x
-        self.y = y
         self.t = t
 
-    def plot(self, time:int, s:float, save:bool = False):
+    def plot(self, y:np.ndarray, time:int, s:float, save:bool = False):
         """
         Plotting the solution to the heat equation using finite difference method for a given time.
         """
@@ -27,7 +26,7 @@ class Plot:
         
         # Plotting for a given time
         plt.figure()
-        plt.plot(self.x, self.y[:, time], 'r')
+        plt.plot(self.x, y[:, time], 'r')
         plt.xlim(0, self.x.max())
         plt.xlabel('x')
         plt.ylabel('u(x, t)')
@@ -36,27 +35,21 @@ class Plot:
             plt.savefig(os.path.join('../figure', f'solution_time_{time}_s_{s:.2f}_.png'))
         plt.show()
     
-    def rmse_plot(self, u:np.ndarray, uhat:np.ndarray, label:str = None, save:bool = False):
+    def rmse_plot(self, rmse:np.ndarray, s:float, name:str = None, save:bool = False):
         """
         Plotting the rmse for all time steps
         """
-        # Computing the rmse error
-        rmse = np.zeros((u.shape[1]))
-        for time in range(u.shape[1]):
-            rmse[time] = mean_squared_error(u[:, time], uhat[:, time])
-        
         # Plotting rmse
         plt.figure()
-        plt.plot(range(rmse.shape[0]), rmse, 'r')
+        plt.plot(self.t, rmse, 'r')
         plt.xlabel('Time')
         plt.ylabel('Error')
-        plt.title('RMSE for Fourer solution and numerical solution')
+        plt.title(f'RMSE for exact solution and numerical scheme w/ s = {s:.3f}')
         if save:
-            plt.savefig(os.path.join('../figure', f'rmse_error_{label}.png'))
+            plt.savefig(os.path.join('../figure', f'rmse_error_{name}.png'))
         plt.show()
 
-
-    def plot_analytic_numeric(self, ue:np.ndarray, s:float, time:int, save:bool = False):
+    def plot_analytic_numeric(self, u:np.ndarray, ue:np.ndarray, s:float, time:int, save:bool = False):
         """
         Plotting analytcal and numerical solutions
         """
@@ -68,14 +61,15 @@ class Plot:
         # Plotting for a given time
         plt.figure()
         plt.plot(self.x, ue[:, 0], 'black', label = 'Initial condition')
-        plt.plot(self.x, ue[:, time], 'b--', label = 'Analytic')
-        plt.plot(self.x, self.y[:, time], 'r--', label = 'Numeric')
+        plt.plot(self.x, ue[:, time], 'blue', label = 'Analytic')
+        plt.plot(self.x, u[:, time], 'r--', label = 'Numeric')
         plt.xlim(0, self.x.max())
         plt.xlabel('x')
         plt.ylabel('u(x, t)')
-        plt.title(f'Heat equation s = {s} for time = {time}' + r'$\Delta t$')
+        plt.title(f'Heat equation s = {s:.3f} for time = {time}' + r'$\Delta t$')
+        plt.legend()
         if save:
-            plt.savefig(os.path.join('../figure', 'analytic_numeric.png'))
+            plt.savefig(os.path.join('../figure', f'analytic_numeric_s_{s:.3f}_.png'))
         plt.show()
 
     
