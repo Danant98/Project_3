@@ -45,16 +45,16 @@ x, t = hq1.get_x_t()
 
 
 # Computing h(x, t) = 1
-h = np.ones((x.shape[0], t.shape[0]))
-h_t = np.zeros((x.shape[0], t.shape[0]))
-h_x = np.zeros((x.shape[0], t.shape[0]))
-h_xx = np.zeros((x.shape[0], t.shape[0]))
+# h = np.ones((x.shape[0], t.shape[0]))
+# h_t = np.zeros((x.shape[0], t.shape[0]))
+# h_x = np.zeros((x.shape[0], t.shape[0]))
+# h_xx = np.zeros((x.shape[0], t.shape[0]))
 
 # Computing h(x, t) = exp(t)
-h2 = np.exp(-t) * np.ones((x.shape[0], t.shape[0]))
-h2_t = -np.exp(-t) * np.zeros((x.shape[0], t.shape[0]))
-h2_x = np.zeros((x.shape[0], t.shape[0]))
-h2_xx = np.zeros((x.shape[0], t.shape[0]))
+# h2 = np.exp(-t) * np.ones((x.shape[0], t.shape[0]))
+# h2_t = -np.exp(-t) * np.zeros((x.shape[0], t.shape[0]))
+# h2_x = np.zeros((x.shape[0], t.shape[0]))
+# h2_xx = np.zeros((x.shape[0], t.shape[0]))
 
 # Boundary- and initial conditions for first example
 # f_1 = np.sin(t)
@@ -63,49 +63,49 @@ h2_xx = np.zeros((x.shape[0], t.shape[0]))
 # f_1_t = np.cos(t)
 
 # Exponenetial decaying boundaries for h(x, t)
-f_2 = g_2 = np.exp(-t)
-f_2_t = g_2_t = -np.exp(-t)
+# f_2 = g_2 = np.exp(-t)
+# f_2_t = g_2_t = -np.exp(-t)
 
 # Running the analytical solution 
 # analytic_1 = Analytic(x, t).solve(h, g_1, f_1)
-analytic_2 = Analytic(x, t).solve(h2, g_2, f_2)
+# analytic_2 = Analytic(x, t).solve(h2, g_2, f_2)
 
 # phi_1 = analytic_1[:, 0]
 # rho_1 = source(x, h, h_t, h_x, h_xx, g_1, f_1, g_1, f_1_t)
 
-rho_2 = source(x, h2, h2_t, h2_x, h2_xx, g_2, f_2, g_2_t, f_2_t)
-phi_2 = analytic_2[:, 0]
+# rho_2 = source(x, h2, h2_t, h2_x, h2_xx, g_2, f_2, g_2_t, f_2_t)
+# phi_2 = analytic_2[:, 0]
 
 # Running the numerical scheme for h(x, t) = 1
 # sol_1 = hq1.finite_diff(f_1, g_1, phi_1, rho_1)
 
 # Running numerical scheme for h(x, t) = exp(-t)
-sol_2 = hq1.finite_diff(f_2, g_2, phi_2, rho_2)
+# sol_2 = hq1.finite_diff(f_2, g_2, phi_2, rho_2)
 
-# Computing rmse for h(x, t) = 1
-rmse_1 = np.zeros_like(t)
-rmse_2 = np.zeros_like(t)
-for n in range(t.shape[0]):
-    # rmse_1[n] = mean_squared_error(sol_1[:, n], analytic_1[:, n])
-    rmse_2[n] = mean_squared_error(sol_2[:, n], analytic_2[:, n])
+# # Computing rmse for h(x, t) = 1
+# rmse_1 = np.zeros_like(t)
+# rmse_2 = np.zeros_like(t)
+# for n in range(t.shape[0]):
+#     # rmse_1[n] = mean_squared_error(sol_1[:, n], analytic_1[:, n])
+#     rmse_2[n] = mean_squared_error(sol_2[:, n], analytic_2[:, n])
 
 
 # ------------------------------------------------------------------------------------------------------
 # Computing the fourier solution
-# four_1, n = f.fourier_1(x, t)
+four_1, n = f.fourier_1(x, t)
 # four_2 = f.fourier_2(x, t)
 
-# finite diff soltuion
-# finite_f_1 = np.sin(t)
-# finite_g_1 = np.zeros((t.shape[0]))
-# finite_rho_1 = np.zeros((x.shape[0], t.shape[0]))
-# finite_phi_1 = x * (1 - x)
-# finite_sol_1 = hq1.finite_diff(finite_f_1, finite_g_1, finite_phi_1, finite_rho_1)
+# finite diff soltution
+finite_f_1 = np.sin(t)
+finite_g_1 = np.zeros((t.shape[0]))
+finite_rho_1 = np.zeros((x.shape[0], t.shape[0]))
+finite_phi_1 = x * (1 - x)
+finite_sol_1 = hq1.finite_diff(finite_f_1, finite_g_1, finite_phi_1, finite_rho_1)
 
 
-# rmse_fourier_1 = np.zeros((t.shape[0]))
-# for n in range(t.shape[0]):
-#     rmse_fourier_1[n] = mean_squared_error(finite_sol_1, four_1)
+rmse_fourier_1 = np.zeros((t.shape[0]))
+for n in range(t.shape[0]):
+    rmse_fourier_1[n] = mean_squared_error(finite_sol_1, four_1)
 
 
 # Running plotting class for both the numerical solutions
@@ -115,7 +115,7 @@ plt = pt(x, t)
 if __name__ == '__main__':
     pass
     # Plotting and animating solution of the heat equation
-    plt.plot_analytic_numeric(sol_2, analytic_2, hq1.get_s(), 10, save = True)
+    plt.plot_analytic_numeric(finite_sol_1, four_1, hq1.get_s(), 10, save = False)
     # plt.plot(300, hq1.get_s())
     # plt.animate(sol_2, hq1.get_s())
     # plt.animate(hq1.get_s())

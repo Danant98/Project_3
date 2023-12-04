@@ -44,7 +44,7 @@ class Plot:
         plt.plot(self.t, rmse, 'r')
         plt.xlabel('Time')
         plt.ylabel('Error')
-        plt.title(f'RMSE for exact solution and numerical scheme w/ s = {s:.3f}')
+        plt.title(f'RMSE for finite Fourier soltuion and numerical scheme w/ s = {s:.3f}')
         if save:
             plt.savefig(os.path.join('../figure', f'rmse_error_{name}.png'))
         plt.show()
@@ -61,7 +61,7 @@ class Plot:
         # Plotting for a given time
         plt.figure()
         plt.plot(self.x, ue[:, 0], 'black', label = 'Initial condition')
-        plt.plot(self.x, ue[:, time], 'blue', label = 'Analytic')
+        plt.plot(self.x, ue[:, time], 'blue', label = 'Fourier series')
         plt.plot(self.x, u[:, time], 'r--', label = 'Numeric')
         plt.xlim(0, self.x.max())
         plt.xlabel('x')
@@ -69,7 +69,7 @@ class Plot:
         plt.title(f'Heat equation s = {s:.3f} for time = {time}' + r'$\Delta t$')
         plt.legend()
         if save:
-            plt.savefig(os.path.join('../figure', f'analytic_numeric_s_{s:.3f}_.png'))
+            plt.savefig(os.path.join('../figure', f'fourier_numeric_s_{s:.3f}_.png'))
         plt.show()
 
     
