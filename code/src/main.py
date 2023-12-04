@@ -57,37 +57,37 @@ h2_x = np.zeros((x.shape[0], t.shape[0]))
 h2_xx = np.zeros((x.shape[0], t.shape[0]))
 
 # Boundary- and initial conditions for first example
-f_1 = np.sin(t)
-g_1 = np.zeros_like(t) # BC
-# Derivative of f(t)
-f_1_t = np.cos(t)
+# f_1 = np.sin(t)
+# g_1 = np.zeros_like(t) # BC
+# # Derivative of f(t)
+# f_1_t = np.cos(t)
 
 # Exponenetial decaying boundaries for h(x, t)
-# f_2 = g_2 = np.exp(-t)
-# f_2_t = g_2_t = -np.exp(-t)
+f_2 = g_2 = np.exp(-t)
+f_2_t = g_2_t = -np.exp(-t)
 
 # Running the analytical solution 
-analytic_1 = Analytic(x, t).solve(h, g_1, f_1)
-# analytic_2 = Analytic(x, t).solve(h2, g_2, f_2)
+# analytic_1 = Analytic(x, t).solve(h, g_1, f_1)
+analytic_2 = Analytic(x, t).solve(h2, g_2, f_2)
 
-phi_1 = analytic_1[:, 0]
-rho_1 = source(x, h, h_t, h_x, h_xx, g_1, f_1, g_1, f_1_t)
+# phi_1 = analytic_1[:, 0]
+# rho_1 = source(x, h, h_t, h_x, h_xx, g_1, f_1, g_1, f_1_t)
 
-# rho_2 = source(x, h2, h2_t, h2_x, h2_xx, g_2, f_2, g_2_t, f_2_t)
-# phi_2 = analytic_2[:, 0]
+rho_2 = source(x, h2, h2_t, h2_x, h2_xx, g_2, f_2, g_2_t, f_2_t)
+phi_2 = analytic_2[:, 0]
 
 # Running the numerical scheme for h(x, t) = 1
-sol_1 = hq1.finite_diff(f_1, g_1, phi_1, rho_1)
+# sol_1 = hq1.finite_diff(f_1, g_1, phi_1, rho_1)
 
 # Running numerical scheme for h(x, t) = exp(-t)
-# sol_2 = hq1.finite_diff(f_2, g_2, phi_2, rho_2)
+sol_2 = hq1.finite_diff(f_2, g_2, phi_2, rho_2)
 
 # Computing rmse for h(x, t) = 1
-# rmse_1 = np.zeros_like(t)
-# rmse_2 = np.zeros_like(t)
-# for n in range(t.shape[0]):
-#     rmse_1[n] = mean_squared_error(sol_1[:, n], analytic_1[:, n])
-#     rmse_2[n] = mean_squared_error(sol_2[:, n], analytic_2[:, n])
+rmse_1 = np.zeros_like(t)
+rmse_2 = np.zeros_like(t)
+for n in range(t.shape[0]):
+    # rmse_1[n] = mean_squared_error(sol_1[:, n], analytic_1[:, n])
+    rmse_2[n] = mean_squared_error(sol_2[:, n], analytic_2[:, n])
 
 
 # ------------------------------------------------------------------------------------------------------
@@ -102,12 +102,12 @@ plt = pt(x, t)
 if __name__ == '__main__':
     pass
     # Plotting and animating solution of the heat equation
-    plt.plot_analytic_numeric(sol_1, analytic_1, hq1.get_s(), 10, save = True)
+    # plt.plot_analytic_numeric(sol_1, analytic_1, hq1.get_s(), 10, save = False)
     # plt.plot(300, hq1.get_s())
     # plt.animate(sol_2, hq1.get_s())
     # plt.animate(hq1.get_s())
     # plt.animate(four_1, s = hq1.get_s())
     # plt.animate(analytic_1)
     # plt.animate(sol_2)
-    # plt.rmse_plot(rmse_1, s = hq1.get_s(), name='4', save=True)
+    # plt.rmse_plot(rmse_1, s = hq1.get_s(), name='3', save = True)
     # plt.rmse_plot(four_2, sol_2, label = 'Fourier series nr. 2')
