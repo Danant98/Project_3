@@ -8,7 +8,7 @@ import numpy as np
 # Creating class for containing the Fourier solutions
 class Fourier:
 
-    def fourier_1(x:np.ndarray, t:np.ndarray, n:int = 5):
+    def fourier_1(x:np.ndarray, t:np.ndarray, n:int = 4):
         """
         Solution with Fourier series for the first example
         """
@@ -38,10 +38,10 @@ class Fourier:
         for time in range(w.shape[1]):
             for j in range(w.shape[0]):
                 u[j, time] = w[j, time] + (1 - x[j]) * np.sin(t[time])
-        return u
+        return u, n
 
     # Second Fourier example
-    def fourier_2(x:np.ndarray, t:np.ndarray, n:int = 10):
+    def fourier_2(x:np.ndarray, t:np.ndarray, n:int = 5):
         """
         Solution with Fourier series for the second example
         """
@@ -62,6 +62,6 @@ class Fourier:
                     # Combining terms
                     score += (term_1 + term_2) * np.sin((2 * k + 1) * np.pi * x[j])
                 u[j, time] = score
-        return u
+        return u, n
 
 

@@ -92,8 +92,21 @@ for n in range(t.shape[0]):
 
 # ------------------------------------------------------------------------------------------------------
 # Computing the fourier solution
-# four_1 = f.fourier_1(x, t)
+# four_1, n = f.fourier_1(x, t)
 # four_2 = f.fourier_2(x, t)
+
+# finite diff soltuion
+# finite_f_1 = np.sin(t)
+# finite_g_1 = np.zeros((t.shape[0]))
+# finite_rho_1 = np.zeros((x.shape[0], t.shape[0]))
+# finite_phi_1 = x * (1 - x)
+# finite_sol_1 = hq1.finite_diff(finite_f_1, finite_g_1, finite_phi_1, finite_rho_1)
+
+
+# rmse_fourier_1 = np.zeros((t.shape[0]))
+# for n in range(t.shape[0]):
+#     rmse_fourier_1[n] = mean_squared_error(finite_sol_1, four_1)
+
 
 # Running plotting class for both the numerical solutions
 plt = pt(x, t)
@@ -102,12 +115,12 @@ plt = pt(x, t)
 if __name__ == '__main__':
     pass
     # Plotting and animating solution of the heat equation
-    # plt.plot_analytic_numeric(sol_1, analytic_1, hq1.get_s(), 10, save = False)
+    plt.plot_analytic_numeric(sol_2, analytic_2, hq1.get_s(), 10, save = True)
     # plt.plot(300, hq1.get_s())
     # plt.animate(sol_2, hq1.get_s())
     # plt.animate(hq1.get_s())
     # plt.animate(four_1, s = hq1.get_s())
     # plt.animate(analytic_1)
     # plt.animate(sol_2)
-    # plt.rmse_plot(rmse_1, s = hq1.get_s(), name='3', save = True)
+    # plt.rmse_plot(rmse_2, s = hq1.get_s(), name='3', save = True)
     # plt.rmse_plot(four_2, sol_2, label = 'Fourier series nr. 2')

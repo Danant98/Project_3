@@ -7,7 +7,7 @@ import numpy as np
 
 class heat_eq:
 
-    def __init__(self, dt:float = 0.001, dx:float = 0.1, T:int = 5, l:int = 1):
+    def __init__(self, dt:float = 0.005, dx:float = 0.1, T:int = 5, l:int = 1):
         # Initializing time and position arrays
         self.x = np.arange(0, l + dx, dx)
         self.t = np.arange(0, T + dt, dt)
