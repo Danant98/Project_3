@@ -61,8 +61,8 @@ class Plot:
         # Plotting for a given time
         plt.figure()
         plt.plot(self.x, ue[:, 0], 'black', label = 'Initial condition')
-        plt.plot(self.x, ue[:, time], 'blue', label = 'Fourier series')
-        plt.plot(self.x, u[:, time], 'r--', label = 'Numeric')
+        plt.plot(self.x, ue[:, time], 'blue', label = 'Numerical scheme')
+        plt.plot(self.x, u[:, time], 'r--', label = 'Fourier series')
         plt.xlim(0, self.x.max())
         plt.xlabel('x')
         plt.ylabel('u(x, t)')

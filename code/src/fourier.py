@@ -41,7 +41,7 @@ class Fourier:
         return u, n
 
     # Second Fourier example
-    def fourier_2(x:np.ndarray, t:np.ndarray, n:int = 5):
+    def fourier_2(x:np.ndarray, t:np.ndarray, n:int = 10):
         """
         Solution with Fourier series for the second example
         """
