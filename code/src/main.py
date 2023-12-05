@@ -50,7 +50,7 @@ x, t = hq1.get_x_t()
 # h_x = np.zeros((x.shape[0], t.shape[0]))
 # h_xx = np.zeros((x.shape[0], t.shape[0]))
 
-# Computing h(x, t) = exp(t)
+# Computing h(x, t) = exp(-t)
 # h2 = np.exp(-t) * np.ones((x.shape[0], t.shape[0]))
 # h2_t = -np.exp(-t) * np.zeros((x.shape[0], t.shape[0]))
 # h2_x = np.zeros((x.shape[0], t.shape[0]))
@@ -82,7 +82,7 @@ x, t = hq1.get_x_t()
 # Running numerical scheme for h(x, t) = exp(-t)
 # sol_2 = hq1.finite_diff(f_2, g_2, phi_2, rho_2)
 
-# # Computing rmse for h(x, t) = 1
+# # Computing rmse for h(x, t) = 1 and 
 # rmse_1 = np.zeros_like(t)
 # rmse_2 = np.zeros_like(t)
 # for n in range(t.shape[0]):
@@ -131,4 +131,4 @@ if __name__ == '__main__':
     # plt.animate(four_2)
     # plt.animate(sol_2)
     # plt.rmse_plot(rmse_2, s = hq1.get_s(), name='3', save = True)
-    plt.rmse_plot(rmse_fourier_2, num, save = True)
+    # plt.rmse_plot(rmse_fourier_2, num, save = True)
