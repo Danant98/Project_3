@@ -35,7 +35,7 @@ class Plot:
             plt.savefig(os.path.join('../figure', f'solution_time_{time}_s_{s:.2f}_.png'))
         plt.show()
     
-    def rmse_plot(self, rmse:np.ndarray, s:float, name:str = None, save:bool = False):
+    def rmse_plot(self, rmse:np.ndarray, n:int, name:str = None, save:bool = False):
         """
         Plotting the rmse for all time steps
         """
@@ -44,12 +44,12 @@ class Plot:
         plt.plot(self.t, rmse, 'r')
         plt.xlabel('Time')
         plt.ylabel('Error')
-        plt.title(f'RMSE for finite Fourier soltuion and numerical scheme w/ s = {s:.3f}')
+        plt.title(f'RMSE for finite Fourier soltuion and numerical scheme w/ n = {n}')
         if save:
-            plt.savefig(os.path.join('../figure', f'rmse_error_{name}.png'))
+            plt.savefig(os.path.join('../figure', f'rmse_error_{n}.png'))
         plt.show()
 
-    def plot_analytic_numeric(self, u:np.ndarray, ue:np.ndarray, s:float, time:int, save:bool = False):
+    def plot_analytic_numeric(self, u:np.ndarray, ue:np.ndarray, n:int, time:int, save:bool = False):
         """
         Plotting analytcal and numerical solutions
         """
@@ -66,10 +66,10 @@ class Plot:
         plt.xlim(0, self.x.max())
         plt.xlabel('x')
         plt.ylabel('u(x, t)')
-        plt.title(f'Heat equation s = {s:.3f} for time = {time}' + r'$\Delta t$')
+        plt.title(f'Heat equation n = {n} for time = {time}' + r'$\Delta t$')
         plt.legend()
         if save:
-            plt.savefig(os.path.join('../figure', f'fourier_numeric_s_{s:.3f}_.png'))
+            plt.savefig(os.path.join('../figure', f'fourier_numeric_n_{n}_.png'))
         plt.show()
 
     

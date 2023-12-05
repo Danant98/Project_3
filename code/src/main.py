@@ -92,20 +92,28 @@ x, t = hq1.get_x_t()
 
 # ------------------------------------------------------------------------------------------------------
 # Computing the fourier solution
-four_1, n = f.fourier_1(x, t)
-# four_2 = f.fourier_2(x, t)
+# four_1, _ = f.fourier_1(x, t)
+four_2, num = f.fourier_2(x, t, n = 10)
 
 # finite diff soltution
-finite_f_1 = np.sin(t)
-finite_g_1 = np.zeros((t.shape[0]))
-finite_rho_1 = np.zeros((x.shape[0], t.shape[0]))
-finite_phi_1 = x * (1 - x)
-finite_sol_1 = hq1.finite_diff(finite_f_1, finite_g_1, finite_phi_1, finite_rho_1)
+# finite_f_1 = np.sin(t)
+# finite_g_1 = np.zeros((t.shape[0]))
+# finite_rho_1 = np.zeros((x.shape[0], t.shape[0]))
+# finite_phi_1 = x * (1 - x)
+# finite_sol_1 = hq1.finite_diff(finite_f_1, finite_g_1, finite_phi_1, finite_rho_1)
+
+# Finite diff solution 2
+finite_f_2 = finite_g_2 = np.zeros((t.shape[0]))
+finite_rho_2 = np.exp(-t) * np.ones((x.shape[0], t.shape[0]))
+finite_phi_2 = x * (1 - x)
+finite_sol_2 = hq1.finite_diff(finite_f_2, finite_g_2, finite_phi_2, finite_rho_2)
 
 
-rmse_fourier_1 = np.zeros((t.shape[0]))
+# rmse_fourier_1 = np.zeros((t.shape[0]))
+rmse_fourier_2 = np.zeros((t.shape[0]))
 for n in range(t.shape[0]):
-    rmse_fourier_1[n] = mean_squared_error(finite_sol_1, four_1)
+    # rmse_fourier_1[n] = mean_squared_error(finite_sol_1, four_1)
+    rmse_fourier_2[n] = mean_squared_error(finite_sol_2, four_2)
 
 
 # Running plotting class for both the numerical solutions
@@ -115,12 +123,12 @@ plt = pt(x, t)
 if __name__ == '__main__':
     pass
     # Plotting and animating solution of the heat equation
-    plt.plot_analytic_numeric(finite_sol_1, four_1, hq1.get_s(), 10, save = False)
+    # plt.plot_analytic_numeric(finite_sol_2, four_2, num, 50, save = True)
     # plt.plot(300, hq1.get_s())
     # plt.animate(sol_2, hq1.get_s())
     # plt.animate(hq1.get_s())
     # plt.animate(four_1, s = hq1.get_s())
-    # plt.animate(analytic_1)
+    plt.animate(four_2)
     # plt.animate(sol_2)
     # plt.rmse_plot(rmse_2, s = hq1.get_s(), name='3', save = True)
-    # plt.rmse_plot(four_2, sol_2, label = 'Fourier series nr. 2')
+    # plt.rmse_plot(rmse_fourier_1, num, save = True)
